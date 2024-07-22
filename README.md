@@ -19,8 +19,8 @@ GitHub Repo List is a Java-based application built using Spring WebFlux to fetch
 
 ## Installation
 ### Prerequisites
-- Java Development Kit (JDK) 11 or higher
-- Apache Maven
+- Java Development Kit (JDK) 21 or higher
+- Apache Maven 3.9.8 or higher
 
 ### Steps
 1. Clone the repository:
