@@ -27,7 +27,7 @@ GitHub Repo List is a Java-based application built using Spring WebFlux to fetch
 ### Steps
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/Github-repo-list.git
+    git clone https://github.com/domstach00/Github-repo-list.git
     cd Github-repo-list
     ```
 
@@ -77,7 +77,7 @@ Once the application is running, you can access it through address http://localh
 This application uses caching to improve performance by reducing number of Github API requests. Caching is handled by Spring's Cache Abstraction and backend by Redis. 
 - Cache configuration is defined in `CacheConfig` class.
 - Cache server is running on Docker image, docker compose file is located in: `docker/docker-compose.yml`
-- Time to live for cached records is defined in `application.properties`
+- Time to live for cached records is defined in `application.properties`, by default it is set for 600 seconds.
 - Out of the box Redis is working on SingleServer mode. It can be changed to Master-Slave, Cluster or Sentinel mode, but it requires changes in `CacheConfig` class and `docker/docker-compose.yml` file to create additional servers
 
 ## Error Handling
