@@ -1,33 +1,32 @@
 package com.solution.githubrepolist.config;
 
-import com.github.benmanes.caffeine.cache.Caffeine;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.cache.CacheManager;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 @Configuration
 @EnableCaching
 public class CacheConfig {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CacheConfig.class);
+
+    @Value("${cache.expiration.time}")
+    private int cacheTTL;
 
     @Bean
-    public CacheManager cacheManager() {
-        LOGGER.info("Creating CaffeineCacheManager");
-        CaffeineCacheManager cacheManager = new CaffeineCacheManager();
-        cacheManager.setCaffeine(Caffeine.newBuilder()
-                .initialCapacity(100)
-                .maximumSize(500)
-                .weakKeys()
-                .recordStats()
-        );
-        cacheManager.setAsyncCacheMode(true);
-        LOGGER.info("CacheManager configured with initialCapacity=100, maximumSize=500");
-        return cacheManager;
+    public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+        return RedisCacheManager.builder(redisConnectionFactory)
+                .cacheDefaults(cacheConfiguration())
+                .build();
+    }
+
+    @Bean
+    public RedisCacheConfiguration cacheConfiguration() {
+        return RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofSeconds(cacheTTL));
     }
 }

@@ -4,7 +4,6 @@ import com.solution.githubrepolist.exception.ExternalApiException;
 import com.solution.githubrepolist.exception.GithubForbiddenException;
 import com.solution.githubrepolist.exception.GithubNotFoundException;
 import com.solution.githubrepolist.model.dto.GithubBranchDto;
-import com.solution.githubrepolist.model.dto.GithubOwnerDto;
 import com.solution.githubrepolist.model.externalapi.github.GithubBranchModel;
 import com.solution.githubrepolist.model.dto.GithubRepositoryDto;
 import com.solution.githubrepolist.model.externalapi.github.GithubRepositoryModel;
@@ -42,22 +41,13 @@ public class GithubClient extends ApiClient {
     }
 
     public Flux<GithubBranchDto> getBranchesForUserRepos(String username, String repoName) {
-        GithubBranchDto branch1 = new GithubBranchDto("branch1", "sha1");
-        GithubBranchDto branch2 = new GithubBranchDto("branch2", "sha2");
-        return Flux.just(branch1, branch2);
-//        return this.getFlux(GithubBranchModel.class, getHeaders(), BRANCHES_URL_TEMPLATE, username, repoName)
-//                .map(GithubBranchDto::toDto);
+        return this.getFlux(GithubBranchModel.class, getHeaders(), BRANCHES_URL_TEMPLATE, username, repoName)
+                .map(GithubBranchDto::toDto);
     }
 
     public Flux<GithubRepositoryDto> getRepositoriesForUser(String username) {
-        GithubOwnerDto owner = new GithubOwnerDto(username);
-        GithubRepositoryDto repo1 = new GithubRepositoryDto("repo1", owner, false);
-        GithubRepositoryDto repo2 = new GithubRepositoryDto("repo2", owner, false);
-        GithubRepositoryDto repo3 = new GithubRepositoryDto("repo3", owner, false);
-        return Flux.just(repo1, repo2, repo3);
-
-//        return this.getFlux(GithubRepositoryModel.class, getHeaders(), REPOS_URL_TEMPLATE, username)
-//                .map(GithubRepositoryDto::toDto);
+        return this.getFlux(GithubRepositoryModel.class, getHeaders(), REPOS_URL_TEMPLATE, username)
+                .map(GithubRepositoryDto::toDto);
     }
 
     @Override

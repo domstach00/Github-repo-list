@@ -1,0 +1,13 @@
+version: '3'
+services:
+  redis:
+    container_name: 'github-repo-list-redis'
+    hostname: 'github-repo-list-redis'
+    image: redis:7.2.5
+    ports:
+      - 6379:6379
+    networks:
+      - github-repo-list-network
+
+networks:
+  github-repo-list-network:

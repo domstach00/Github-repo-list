@@ -2,9 +2,10 @@ package com.solution.githubrepolist.model.dto;
 
 import com.solution.githubrepolist.model.externalapi.github.GithubRepositoryModel;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class GithubRepositoryDto {
+public class GithubRepositoryDto implements Serializable {
     private String repositoryName;
     private boolean isFork;
     private GithubOwnerDto owner;

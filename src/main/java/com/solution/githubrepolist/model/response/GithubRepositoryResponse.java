@@ -3,11 +3,12 @@ package com.solution.githubrepolist.model.response;
 import com.solution.githubrepolist.model.dto.GithubBranchDto;
 import com.solution.githubrepolist.model.dto.GithubRepositoryDto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GithubRepositoryResponse {
+public class GithubRepositoryResponse implements Serializable {
     private String repositoryName;
     private String ownerLogin;
     private List<GithubBranchDto> branches;
