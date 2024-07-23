@@ -2,6 +2,7 @@ package com.solution.githubrepolist.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.reactive.function.client.ClientResponse;
@@ -13,25 +14,15 @@ import java.util.function.Consumer;
 
 public abstract class ApiClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiClient.class);
-    protected final WebClient webClient;
-    protected final String baseUrl;
 
-    public ApiClient(String baseUrl) {
-        this.baseUrl = baseUrl;
-        this.webClient = WebClient.create(baseUrl);
-        LOGGER.info("WebClient created with base URL: {}", baseUrl);
-    }
-
-    public ApiClient(String baseUrl, WebClient webClient) {
-        this.webClient = webClient;
-        this.baseUrl = baseUrl;
-    }
+    @Autowired
+    private WebClient webClient;
 
     public  <T> Flux<T> getFlux(Class<T> responseType, Consumer<HttpHeaders> httpHeadersConsumer,
-                                String uri, Object... uriVariables) {
-        LOGGER.debug("Request to: {}{} with uriVariables: {}", this.baseUrl, uri, uriVariables);
+                                String url, Object... uriVariables) {
+        LOGGER.debug("Request to: {} with uriVariables: {}", url, uriVariables);
         return webClient.get()
-                .uri(uri, uriVariables)
+                .uri(url, uriVariables)
                 .headers(httpHeadersConsumer)
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, this::handle4xxErrors)

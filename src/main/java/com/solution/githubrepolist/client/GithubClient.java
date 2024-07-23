@@ -14,7 +14,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientResponse;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -24,21 +23,13 @@ import java.util.function.Consumer;
 public class GithubClient extends ApiClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(GithubClient.class);
     private static final String BASE_URL = "https://api.github.com";
-    private static final String REPOS_URL_TEMPLATE = "/users/{username}/repos";
-    private static final String BRANCHES_URL_TEMPLATE = "/repos/{username}/{repoName}/branches";
+    private static final String REPOS_URL_TEMPLATE = BASE_URL + "/users/{username}/repos";
+    private static final String BRANCHES_URL_TEMPLATE = BASE_URL + "/repos/{username}/{repoName}/branches";
 
     @Value("${github.access-token:}")
     private String bearerToken;
     @Value("${github.x-api-version-header:}")
     private String xGitHubApiVersionHeader;
-
-    public GithubClient() {
-        super(BASE_URL);
-    }
-
-    public GithubClient(WebClient webClient) {
-        super(BASE_URL, webClient);
-    }
 
     public Flux<GithubBranchDto> getBranchesForUserRepos(String username, String repoName) {
         return this.getFlux(GithubBranchModel.class, getHeaders(), BRANCHES_URL_TEMPLATE, username, repoName)
