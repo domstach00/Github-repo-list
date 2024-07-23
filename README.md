@@ -16,7 +16,7 @@
 13. [License](#license)
 
 ## Introduction
-GitHub Repo List is a Java-based application built using Spring WebFlux to fetch and display information about GitHub repositories with branches. This application also showcases the use of reactive programming principles provided by Spring WebFlux, enabling efficient handling of asynchronous, non-blocking data streams.
+GitHub Repo List is a Java-based application built using Spring WebFlux to fetch and display information about GitHub repositories with all of its branches. This application also showcases the use of reactive programming principles provided by Spring WebFlux, enabling efficient handling of asynchronous, non-blocking data streams.
 
 ## Installation
 ### Prerequisites
@@ -89,7 +89,7 @@ The `GlobalControllerAdvice` class handles various exceptions that may occur dur
     - **Log Message**: "GithubNotFoundException occurred: [exception message]"
 
 2. **GithubForbiddenException**
-    - **Description**: This exception is thrown when access to the requested GitHub resource is forbidden, possibly due to reach requests rate limit.
+    - **Description**: This exception is thrown when access to the requested GitHub resource is forbidden, possibly due to reaching requests limit.
     - **HTTP Status**: Forbidden 403.
     - **Log Message**: "GithubForbiddenException occurred: [exception message]"
 
@@ -119,35 +119,31 @@ For each exception, an `ErrorResponse` object is returned in the response body c
 - Docker
 
 ## Configuration
-To configure the application, you can use the `application.properties` file located in `src/main/resources`, after making changes in this file you should rebuld the project using maven like in [installation process](#installation).
+To configure the application, you can use the `application.properties` file located in `src/main/resources`, after making changes in this file you should rebuild the project using maven like in the [installation process](#installation).
 
 ### Adding GITHUB_TOKEN
-Although adding a `GITHUB_TOKEN` is optional, it is recommended for accessing GitHub API with higher rate limits.
+Although adding a `GITHUB_TOKEN` is optional, it is recommended for accessing GitHub API with better quota.
 
 1. Open the application.properties file.
 2. Add the following line with your GitHub token:
-    ```properties
-    github.access-token=YOUR_GITHUB_TOKEN
-    ```
 
-    Alternatively, you can set the token as an environment variable:
-    ### Windows
-    ```sh
-    SETX GITHUB_TOKEN "YOUR_GITHUB_TOKEN"
-    ```
-   
-    ### Linux
-    ```bash
-    export GITHUB_TOKEN=YOUR_GITHUB_TOKEN
-    ```
+github.access-token=YOUR_GITHUB_TOKEN
 
-### Caching time to live
-1. Open the application.properties file.
-2. In following line you can define Time to live for records in Cache (in seconds):
-    ```sh
-   cache.expiration.time=TTL_IN_SECONDS
+Alternatively, you can set the token as an environment variable:
+### Windows
+```sh
+SETX GITHUB_TOKEN "YOUR_GITHUB_TOKEN"
    ```
 
+### Linux
+```bash
+export GITHUB_TOKEN=YOUR_GITHUB_TOKEN
+   ```
+
+### Setting time to live of the cache
+1. Open the application.properties file.
+2. In following line you can define Time to live for records in Cache (in seconds):
+<br> cache.expiration.time=TTL_IN_SECONDS
 
 ## Example
 Here is example to get you started:
