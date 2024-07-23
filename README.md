@@ -5,14 +5,15 @@
 2. [Installation](#installation)
 3. [Usage](#usage)
 4. [Endpoint](#endpoint)
-5. [Error handling](#error-handling)
-6. [Features](#features)
-7. [Dependencies](#dependencies)
-8. [Configuration](#configuration)
-9. [Example](#example)
-10. [Troubleshooting](#troubleshooting)
-11. [Contributor](#contributor)
-12. [License](#license)
+5. [Caching](#caching)
+6. [Error handling](#error-handling)
+7. [Features](#features)
+8. [Dependencies](#dependencies)
+9. [Configuration](#configuration)
+10. [Example](#example)
+11. [Troubleshooting](#troubleshooting)
+12. [Contributor](#contributor)
+13. [License](#license)
 
 ## Introduction
 GitHub Repo List is a Java-based application built using Spring WebFlux to fetch and display information about GitHub repositories with branches. This application also showcases the use of reactive programming principles provided by Spring WebFlux, enabling efficient handling of asynchronous, non-blocking data streams.
@@ -118,7 +119,7 @@ For each exception, an `ErrorResponse` object is returned in the response body c
 - Docker
 
 ## Configuration
-To configure the application, you can use the application.properties file located in `src/main/resources`.
+To configure the application, you can use the `application.properties` file located in `src/main/resources`, after making changes in this file you should rebuld the project using maven like in [installation process](#installation).
 
 ### Adding GITHUB_TOKEN
 Although adding a `GITHUB_TOKEN` is optional, it is recommended for accessing GitHub API with higher rate limits.
