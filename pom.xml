@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>com.solution</groupId>
-    <artifactId>GithubRepoList</artifactId>
+    <artifactId>Github-repo-list</artifactId>
     <version>1.0</version>
     <name>Github-repo-list</name>
     <description>Github-repo-list</description>

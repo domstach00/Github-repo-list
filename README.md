@@ -27,7 +27,7 @@ GitHub Repo List is a Java-based application built using Spring WebFlux to fetch
 1. Clone the repository:
     ```sh
     git clone https://github.com/yourusername/Github-repo-list.git
-    cd GithubRepoList
+    cd Github-repo-list
     ```
 
 2. Build the project using Maven:
@@ -36,14 +36,13 @@ GitHub Repo List is a Java-based application built using Spring WebFlux to fetch
    mvn clean install
    ```
    
-3. Create Redis docker image:
+3. In separate terminal window create Redis docker image:
    ```sh
    cd docker
    docker-compose up --build
    ```
 
-3. Run the application:
-
+4. Run the application:
     ```sh
     mvn spring-boot:run
     ```
@@ -156,7 +155,7 @@ Here is example to get you started:
 
 1. Go to GithubRepoList location
    ```sh
-   cd GithubRepoList
+   cd Github-repo-list
     ```
 2. Start Docker
     ```sh
