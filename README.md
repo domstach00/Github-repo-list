@@ -167,7 +167,7 @@ Here is example to get you started:
    mvn spring-boot:run
     ```
 
-### Fetch non Repositories
+### Fetch non-fork Repositories for given username
    ```sh
     curl.exe -H "Accept: application/json" http://localhost:8080/github/repos/non-fork/?username=octocat
    ```
