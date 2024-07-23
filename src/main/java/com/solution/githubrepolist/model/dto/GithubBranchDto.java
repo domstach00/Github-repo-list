@@ -2,9 +2,10 @@ package com.solution.githubrepolist.model.dto;
 
 import com.solution.githubrepolist.model.externalapi.github.GithubBranchModel;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class GithubBranchDto {
+public class GithubBranchDto implements Serializable {
     private String branchName;
     private String lastCommitSha;
 

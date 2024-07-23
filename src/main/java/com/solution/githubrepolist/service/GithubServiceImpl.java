@@ -7,6 +7,7 @@ import com.solution.githubrepolist.model.response.GithubRepositoryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -18,6 +19,7 @@ public class GithubServiceImpl implements GithubService {
     @Autowired
     private GithubClient githubClient;
 
+    @Cacheable(value = "GithubServiceImpl.getNonForkRepositories", key = "#username", sync = true)
     @Override
     public Flux<GithubRepositoryDto> getNonForkRepositories(String username) {
         LOGGER.info("Fetching non-fork repositories for user: {}", username);
@@ -25,15 +27,17 @@ public class GithubServiceImpl implements GithubService {
                 .filter(repo -> !repo.getIsFork());
     }
 
+    @Cacheable(value = "GithubServiceImpl.getBranchesForRepo", key = "{#username, #repoName}", sync = true)
     @Override
     public Flux<GithubBranchDto> getBranchesForRepo(String username, String repoName) {
         LOGGER.info("Fetching branches for repository: {} of user: {}", repoName, username);
         return getGithubClient().getBranchesForUserRepos(username, repoName);
     }
 
+    @Cacheable(value = "GithubServiceImpl.getReposWithBranchesForUser", key = "#username", sync = true)
     @Override
     public Flux<GithubRepositoryResponse> getReposWithBranchesForUser(String username) {
-        LOGGER.info("Fetching repositories with branches for user: {}", username);
+        LOGGER.info("Started fetching repositories with branches for user: {}", username);
         return getNonForkRepositories(username)
                 .flatMap(githubRepository -> createGithubResponseWithBranches(username, githubRepository));
     }

@@ -2,9 +2,10 @@ package com.solution.githubrepolist.model.dto;
 
 import com.solution.githubrepolist.model.externalapi.github.GithubOwnerModel;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class GithubOwnerDto {
+public class GithubOwnerDto implements Serializable {
     String login;
 
     public GithubOwnerDto() {

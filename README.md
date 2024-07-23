@@ -21,18 +21,25 @@ GitHub Repo List is a Java-based application built using Spring WebFlux to fetch
 ### Prerequisites
 - Java Development Kit (JDK) 21 or higher
 - Apache Maven 3.9.8 or higher
+- Docker
 
 ### Steps
 1. Clone the repository:
     ```sh
     git clone https://github.com/yourusername/Github-repo-list.git
-    cd Github-repo-list
+    cd GithubRepoList
     ```
 
-   2. Build the project using Maven:
+2. Build the project using Maven:
     
    ```sh
    mvn clean install
+   ```
+   
+3. Create Redis docker image:
+   ```sh
+   cd docker
+   docker-compose up --build
    ```
 
 3. Run the application:
@@ -66,6 +73,13 @@ Once the application is running, you can access it through address http://localh
     ]
     ```
 
+## Caching
+This application uses caching to improve performance by reducing number of Github API requests. Caching is handled by Spring's Cache Abstraction and backend by Redis. 
+- Cache configuration is defined in `CacheConfig` class.
+- Cache server is running on Docker image, docker compose file is located in: `docker/docker-compose.yml`
+- Time to live for cached records is defined in `application.properties`
+- Out of the box Redis is working on SingleServer mode. It can be changed to Master-Slave, Cluster or Sentinel mode, but it requires changes in `CacheConfig` class and `docker/docker-compose.yml` file to create additional servers
+
 ## Error Handling
 The `GlobalControllerAdvice` class handles various exceptions that may occur during the execution of the application. Below are the errors that can be returned and their corresponding HTTP status codes:
 
@@ -95,12 +109,14 @@ For each exception, an `ErrorResponse` object is returned in the response body c
 - Fetch information about GitHub repositories.
 - Efficient handling of asynchronous data streams.
 - High performance by handling many requests at once without slowing down, thanks to its non-blocking, asynchronous nature of Webflux
+- Reduced number of external API requests by adding Caching
 
 ## Dependencies
 - Java 21 or higher
 - Spring Boot 3.3.1 or higher
 - Spring WebFlux 3.1.12 or higher
 - Maven 3.9.8 or higher
+- Docker
 
 ## Configuration
 To configure the application, you can use the application.properties file located in `src/main/resources`.
@@ -125,8 +141,31 @@ Although adding a `GITHUB_TOKEN` is optional, it is recommended for accessing Gi
     export GITHUB_TOKEN=YOUR_GITHUB_TOKEN
     ```
 
+### Caching time to live
+1. Open the application.properties file.
+2. In following line you can define Time to live for records in Cache (in seconds):
+    ```sh
+   cache.expiration.time=TTL_IN_SECONDS
+   ```
+
+
 ## Example
 Here is example to get you started:
+
+### Start application
+
+1. Go to GithubRepoList location
+   ```sh
+   cd GithubRepoList
+    ```
+2. Start Docker
+    ```sh
+    docker start github-repo-list-redis
+    ```
+2. Start application
+    ```sh
+   mvn spring-boot:run
+    ```
 
 ### Fetch non Repositories
    ```sh
@@ -138,6 +177,7 @@ If you encounter any issues during the setup or usage of the application, refer 
 
 - Ensure that JDK and Maven are installed correctly.
 - Verify that you have a stable internet connection to fetch dependencies.
+- Verify that Redis server is working properly
 
 ## Contributor
 - [Dominik Stachowiak](https://www.linkedin.com/in/dominik-stachowiak/)
