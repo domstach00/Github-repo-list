@@ -2,7 +2,6 @@ package com.solution.githubrepolist.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +10,6 @@ class GithubValidatorTest {
 
     private final int usernameMaxLengthForLogging = 50;
 
-    @InjectMocks
     private GithubValidator githubValidator;
 
     @BeforeEach

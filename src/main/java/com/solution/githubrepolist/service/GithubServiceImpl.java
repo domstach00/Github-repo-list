@@ -24,7 +24,7 @@ public class GithubServiceImpl implements GithubService {
     public Flux<GithubRepositoryDto> getNonForkRepositories(String username) {
         LOGGER.info("Fetching non-fork repositories for user: {}", username);
         return getGithubClient().getRepositoriesForUser(username)
-                .filter(repo -> !repo.getIsFork());
+                .filter(repo -> !repo.isFork());
     }
 
     @Cacheable(value = "GithubServiceImpl.getBranchesForRepo", key = "{#username, #repoName}", sync = true)
@@ -43,7 +43,7 @@ public class GithubServiceImpl implements GithubService {
     }
 
     private Mono<GithubRepositoryResponse> createGithubResponseWithBranches(String username, GithubRepositoryDto githubRepository) {
-        return getBranchesForRepo(username, githubRepository.getRepositoryName())
+        return getBranchesForRepo(username, githubRepository.repositoryName())
                 .collectList()
                 .map(githubBranches -> GithubRepositoryResponse.fromDto(githubRepository, githubBranches));
     }

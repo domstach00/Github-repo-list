@@ -159,9 +159,9 @@ class GithubServiceImplTest {
 
         StepVerifier.create(result)
                 .assertNext(response -> {
-                    assertEquals(response.getRepositoryName(), repoName);
-                    assertEquals(response.getBranches().size(), 1);
-                    assertEquals(response.getBranches().get(0).getBranchName(), branchName);
+                    assertEquals(response.repositoryName(), repoName);
+                    assertEquals(response.branches().size(), 1);
+                    assertEquals(response.branches().get(0).branchName(), branchName);
                 })
                 .verifyComplete();
     }
@@ -195,8 +195,8 @@ class GithubServiceImplTest {
 
         StepVerifier.create(result)
                 .assertNext(response -> {
-                    assertEquals(response.getRepositoryName(), repoName);
-                    assertEquals(response.getBranches().size(), 0);
+                    assertEquals(response.repositoryName(), repoName);
+                    assertEquals(response.branches().size(), 0);
                 })
                 .verifyComplete();
     }
